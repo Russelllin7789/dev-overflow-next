@@ -4,6 +4,7 @@ import React from "react";
 
 import { UserButton, SignedIn } from "@clerk/nextjs";
 import Theme from "./Theme";
+import MobileNav from "./MobileNav";
 
 const Navbar = () => {
   return (
@@ -35,6 +36,8 @@ const Navbar = () => {
             }}
           />
         </SignedIn>
+
+        <MobileNav />
       </div>
     </nav>
   );
