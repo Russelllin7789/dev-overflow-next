@@ -101,6 +101,7 @@ const RightSidebar = () => {
                 alt="right arrow"
                 width={20}
                 height={20}
+                className="invert-colors"
               />
             </Link>
           ))}
