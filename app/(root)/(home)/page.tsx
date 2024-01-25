@@ -18,7 +18,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="mt-11 flex flex-col items-start gap-5 max-md:flex-row max-md:justify-between max-sm:flex-col">
+      <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearch
           route="/"
           iconPosition="left"
