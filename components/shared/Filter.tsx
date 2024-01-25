@@ -1,48 +1,42 @@
 import React from "react";
-import HomeSelect from "./HomeSelect";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-interface FilterContent {
-  id: number;
-  content: string;
-  value: string;
+interface FilterProps {
+  filters: {
+    name: string;
+    value: string;
+  }[];
+  otherClasses?: string;
+  containerClasses?: string;
 }
 
-const AllFilters: FilterContent[] = [
-  {
-    id: 1,
-    content: "Newest",
-    value: "newest",
-  },
-  {
-    id: 2,
-    content: "Recommended",
-    value: "recommended",
-  },
-  {
-    id: 3,
-    content: "Frequent",
-    value: "frequent",
-  },
-  {
-    id: 4,
-    content: "Unanswered",
-    value: "unanswered",
-  },
-];
-
-const Filter = () => {
+const Filter = ({ filters, otherClasses, containerClasses }: FilterProps) => {
   return (
-    <div>
-      <div className="flex items-center max-md:hidden">
-        {AllFilters.map((filter) => (
-          <span key={filter.id} className="body-medium rounded-lg px-6 py-3">
-            {filter.content}
-          </span>
-        ))}
-      </div>
-      <div className="hidden max-md:block">
-        <HomeSelect placeholder="Select a Filter" options={AllFilters} />
-      </div>
+    <div className={`relative ${containerClasses}`}>
+      <Select>
+        <SelectTrigger
+          className={`${otherClasses} body-regular light-border background-light800_dark300 text-dark500_light700 border px-5 py-2.5`}
+        >
+          <div className="line-clamp-1 flex-1 text-left">
+            <SelectValue placeholder="Select a Filter" />
+          </div>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup></SelectGroup>
+          {filters.map((filter) => (
+            <SelectItem key={filter.value} value={filter.value}>
+              {filter.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 };
