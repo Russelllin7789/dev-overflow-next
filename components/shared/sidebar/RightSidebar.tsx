@@ -6,13 +6,13 @@ import Tag from "../tag/Tag";
 
 const RightSidebar = () => {
   interface Question {
-    id: number;
+    id: string;
     content: string;
     link: string;
   }
 
   interface Tag {
-    id: number;
+    id: string;
     content: string;
     link: string;
     tagNumber: number;
@@ -20,28 +20,28 @@ const RightSidebar = () => {
 
   const questions: Question[] = [
     {
-      id: 1,
+      id: "1",
       content:
         "Would it be appropriate to point out an error in another paper during a referee report?",
       link: "/",
     },
     {
-      id: 2,
+      id: "2",
       content: "How can an airconditioning machine exist?",
       link: "/",
     },
     {
-      id: 3,
+      id: "3",
       content: "Interrogated every time crossing UK Border as citizen",
       link: "/",
     },
     {
-      id: 4,
+      id: "4",
       content: "Low digit addition generator",
       link: "/",
     },
     {
-      id: 5,
+      id: "5",
       content: "What is an example of 3 numbers that do not make up a vector?",
       link: "/",
     },
@@ -49,31 +49,31 @@ const RightSidebar = () => {
 
   const Tags: Tag[] = [
     {
-      id: 1,
+      id: "1",
       content: "JavaScript",
       link: "/",
       tagNumber: 20152,
     },
     {
-      id: 2,
+      id: "2",
       content: "Next.js",
       link: "/",
       tagNumber: 20000,
     },
     {
-      id: 3,
+      id: "3",
       content: "React.js",
       link: "/",
       tagNumber: 18493,
     },
     {
-      id: 4,
+      id: "4",
       content: "Vue.js",
       link: "/",
       tagNumber: 16269,
     },
     {
-      id: 5,
+      id: "5",
       content: "Node.js",
       link: "/",
       tagNumber: 15121,
@@ -115,6 +115,7 @@ const RightSidebar = () => {
           {Tags.map((tag) => (
             <Tag
               key={tag.id}
+              id={tag.id}
               tagContent={tag.content}
               tagNumber={tag.tagNumber}
             />

@@ -3,9 +3,11 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
 const Tag = ({
+  id,
   tagContent,
   tagNumber,
 }: {
+  id: string;
   tagContent: string;
   tagNumber?: number;
 }) => {
