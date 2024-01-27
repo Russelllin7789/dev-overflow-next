@@ -4,6 +4,9 @@ import LocalSearch from "@/components/shared/search/LocalSearch";
 import { HomePageFilters } from "@/constants/filters";
 import Filter from "@/components/shared/Filter";
 import HomeFilters from "@/components/home/HomeFilters";
+import NoResult from "@/components/shared/NoResult";
+
+const questions = [];
 
 export default function Home() {
   return (
@@ -34,6 +37,10 @@ export default function Home() {
       </div>
 
       <HomeFilters />
+
+      <div className="mt-10 flex w-full flex-col gap-6">
+        {questions.length >= 1 ? "" : <NoResult />}
+      </div>
     </>
   );
 }
