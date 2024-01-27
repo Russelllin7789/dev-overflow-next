@@ -39,7 +39,18 @@ export default function Home() {
       <HomeFilters />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length >= 1 ? "" : <NoResult />}
+        {questions.length >= 1 ? (
+          ""
+        ) : (
+          <NoResult
+            title="There's no question to show"
+            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
+        discussion. our query could be the next big thing others learn from. Get
+        involved! 💡"
+            link="/ask-question"
+            linkTitle="Ask a Question"
+          />
+        )}
       </div>
     </>
   );
