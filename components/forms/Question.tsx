@@ -42,7 +42,11 @@ const Question = () => {
 
     try {
       // make an async call to api
-      await createQuestion({});
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+      });
     } catch (error) {
     } finally {
       setIsSubmitting(false);
