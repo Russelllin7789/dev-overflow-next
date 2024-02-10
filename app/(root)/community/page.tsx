@@ -1,8 +1,9 @@
+import Link from "next/link";
 import { UserFilters } from "@/constants/filters";
+import { getAllUsers } from "@/lib/actions/user.action";
 import LocalSearch from "@/components/shared/search/LocalSearch";
 import Filter from "@/components/shared/Filter";
-import NoResult from "@/components/shared/NoResult";
-import { getAllUsers } from "@/lib/actions/user.action";
+import UserCard from "@/components/cards/UserCard";
 
 const page = async () => {
   const result = await getAllUsers({});
@@ -27,14 +28,14 @@ const page = async () => {
 
       <section className="mt-12 flex flex-wrap gap-4">
         {result.users.length >= 0 ? (
-          result.users.map((user) => <div key={user.name}>{user.name}</div>)
+          result.users.map((user) => <UserCard key={user.name} user={user} />)
         ) : (
-          <NoResult
-            title="There's no user to show"
-            description="No users right now..."
-            link="/"
-            linkTitle="Go to homepage"
-          />
+          <div className="paragraph-regular text-dark200_light800 mx-auto max-w-4xl text-center">
+            <p>No users yet</p>
+            <Link href="/sign-up" className="mt-2 font-bold text-accent-blue">
+              Join to be the very first!
+            </Link>
+          </div>
         )}
       </section>
     </>
