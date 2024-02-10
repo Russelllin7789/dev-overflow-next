@@ -11,6 +11,22 @@ import {
 import { revalidatePath } from "next/cache";
 import Question from "@/database/question.model";
 
+export async function getAllUsers() {
+  try {
+    connectToDatabase();
+
+    const users = await User.find({});
+    // .populate({ path: "author", model: User })
+    // // to sort the created qs by creation date
+    // .sort({ createdAt: -1 });
+
+    return { users };
+  } catch (error) {
+    console.log("error:", error);
+    throw error;
+  }
+}
+
 export async function getUserById(params: GetUserByIdParams) {
   try {
     connectToDatabase();
