@@ -46,10 +46,10 @@ export default async function Home() {
           result.questions.map((question) => (
             <QuestionCard
               key={question.title}
-              id={question.id}
+              _id={question.id}
               title={question.title}
               tags={question.tags}
-              author={question.author}
+              author={question.author[0]}
               upvotes={question.upvotes}
               views={question.views}
               answers={question.answers}

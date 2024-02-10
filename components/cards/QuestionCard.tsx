@@ -5,32 +5,35 @@ import Metric from "../shared/Metric";
 import { getTimestamp, formatAndDivideNumber } from "@/lib/utils";
 
 type CardProps = {
-  id: string;
+  _id: string;
   title: string;
   tags: {
-    id: string;
+    _id: string;
     name: string;
   }[];
   author: {
-    id: string;
+    _id: string;
     name: string;
-    avatar: string;
+    picture: string;
+    clerkId: string;
   };
   upvotes: number;
   views: number;
   answers: Array<object>;
   createdAt: Date;
+  clerkId?: string | null;
 };
 
 const QuestionCard = ({
-  id,
+  clerkId,
+  _id,
   title,
   tags,
   author,
-  createdAt,
-  views,
   upvotes,
+  views,
   answers,
+  createdAt,
 }: CardProps) => {
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
@@ -38,7 +41,7 @@ const QuestionCard = ({
         <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
           {getTimestamp(createdAt)}
         </span>
-        <Link href={`/question/${id}`}>
+        <Link href={`/question/${_id}`}>
           <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
             {title}
           </h3>
@@ -49,17 +52,17 @@ const QuestionCard = ({
 
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (
-          <Tag key={tag.id} id={id} tagContent={tag.name} />
+          <Tag key={tag._id} id={_id} tagContent={tag.name} />
         ))}
       </div>
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
-          imgUrl="/assets/icons/avatar.svg"
+          imgUrl={author.picture}
           alt="user"
           value={author.name}
           title={` - asked ${getTimestamp(createdAt)}`}
-          href={`/profile/${author.id}`}
+          href={`/profile/${author._id}`}
           isAuthor
           textStyles="body-medium text-dark400_light700"
         />
