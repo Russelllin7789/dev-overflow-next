@@ -7,18 +7,21 @@ import {
   DeleteUserParams,
   GetUserByIdParams,
   UpdateUserParams,
+  GetAllUsersParams,
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import Question from "@/database/question.model";
 
-export async function getAllUsers() {
+export async function getAllUsers(params: GetAllUsersParams) {
   try {
     connectToDatabase();
 
-    const users = await User.find({});
-    // .populate({ path: "author", model: User })
-    // // to sort the created qs by creation date
-    // .sort({ createdAt: -1 });
+    // const { page = 1, pageSize = 20, filter, searchQuery } = params;
+
+    const users = await User.find({})
+      // .populate({ path: "author", model: User })
+      // // to sort the created qs by creation date
+      .sort({ createdAt: -1 });
 
     return { users };
   } catch (error) {
