@@ -32,9 +32,15 @@ export async function getQuestionById(params: GetQuestionByIdParams) {
     connectToDatabase();
 
     const { questionId } = params;
-    const questions = await Question.find({ _id: questionId });
+    const questions = await Question.findById(questionId)
+      .populate({ path: "tags", model: Tag, select: "_id name" })
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id clerkId name picture",
+      });
 
-    return { questions };
+    return questions;
   } catch (error) {
     console.log(error);
     throw error;
