@@ -1,8 +1,27 @@
 "use server";
 
 import User from "@/database/user.model";
+import Tag from "@/database/tag.model";
 import { connectToDatabase } from "../mongoose";
-import { GetTopInteractedTagsParams } from "./shared.types";
+import { GetAllTagsParams, GetTopInteractedTagsParams } from "./shared.types";
+
+export async function getAllTags(params: GetAllTagsParams) {
+  try {
+    connectToDatabase();
+
+    // const { page = 1, pageSize = 20, filter, searchQuery } = params;
+
+    const tags = await Tag.find({})
+      // .populate({ path: "author", model: User })
+      // // to sort the created qs by creation date
+      .sort({ createdOn: -1 });
+
+    return { tags };
+  } catch (error) {
+    console.log("error:", error);
+    throw error;
+  }
+}
 
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
