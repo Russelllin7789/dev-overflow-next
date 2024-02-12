@@ -1,9 +1,10 @@
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 import Metric from "@/components/shared/Metric";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import ParseHTML from "@/components/shared/ParseHTML";
 
 const page = async ({ params }: { params: { questionId: string } }) => {
   const { questionId } = params;
@@ -61,6 +62,8 @@ const page = async ({ params }: { params: { questionId: string } }) => {
           textStyles="small-medium text-dark400_light800"
         />
       </div>
+
+      <ParseHTML data={result.content} />
     </>
   );
 };
