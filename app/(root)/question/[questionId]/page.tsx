@@ -5,6 +5,8 @@ import Metric from "@/components/shared/Metric";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import ParseHTML from "@/components/shared/ParseHTML";
+import Tag from "@/components/shared/tag/Tag";
+import Answer from "@/components/forms/Answer";
 
 const page = async ({ params }: { params: { questionId: string } }) => {
   const { questionId } = params;
@@ -64,6 +66,14 @@ const page = async ({ params }: { params: { questionId: string } }) => {
       </div>
 
       <ParseHTML data={result.content} />
+
+      <div className="mt-8 flex flex-wrap gap-2">
+        {result.tags.map((tag: any) => (
+          <Tag key={tag._id} id={tag._id} tagContent={tag.name} />
+        ))}
+      </div>
+
+      <Answer />
     </>
   );
 };
