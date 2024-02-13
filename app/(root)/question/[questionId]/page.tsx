@@ -7,12 +7,18 @@ import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import ParseHTML from "@/components/shared/ParseHTML";
 import Tag from "@/components/shared/tag/Tag";
 import Answer from "@/components/forms/Answer";
+import { auth } from "@clerk/nextjs";
+import { getUserById } from "@/lib/actions/user.action";
 
 const page = async ({ params }: { params: { questionId: string } }) => {
   const { questionId } = params;
   const result = await getQuestionById({ questionId });
+  const { userId: clerkId } = auth();
+  let mongoUser;
 
-  console.log("q:", result);
+  if (clerkId) {
+    mongoUser = await getUserById({ userId: clerkId });
+  }
 
   return (
     <>
@@ -73,7 +79,11 @@ const page = async ({ params }: { params: { questionId: string } }) => {
         ))}
       </div>
 
-      <Answer />
+      <Answer
+        question={result.content}
+        questionId={JSON.stringify(result._id)}
+        authorId={JSON.stringify(mongoUser._id)}
+      />
     </>
   );
 };
