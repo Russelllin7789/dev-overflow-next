@@ -109,6 +109,7 @@ const Answer = () => {
               type="button"
               className="primary-gradient w-fit text-white"
               disabled={isSubmitting}
+              onClick={() => setIsSubmitting(true)}
             >
               {isSubmitting ? "Submitting..." : "Submit"}
             </Button>
