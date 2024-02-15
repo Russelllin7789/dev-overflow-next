@@ -28,7 +28,7 @@ export async function createAnswer(params: CreateAnswerParams) {
     const { content, author, question, path } = params;
 
     // create the answer
-    const newAnswer = new Answer({
+    const newAnswer = await Answer.create({
       content,
       author,
       question,
