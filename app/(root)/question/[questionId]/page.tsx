@@ -9,6 +9,7 @@ import Tag from "@/components/shared/tag/Tag";
 import Answer from "@/components/forms/Answer";
 import { auth } from "@clerk/nextjs";
 import { getUserById } from "@/lib/actions/user.action";
+import AllAnswers from "@/components/shared/AllAnswers";
 
 const page = async ({ params }: { params: { questionId: string } }) => {
   const { questionId } = params;
@@ -78,6 +79,12 @@ const page = async ({ params }: { params: { questionId: string } }) => {
           <Tag key={tag._id} id={tag._id} tagContent={tag.name} />
         ))}
       </div>
+
+      <AllAnswers
+        questionId={result._id}
+        userId={JSON.stringify(mongoUser._id)}
+        totalAnswers={result.answers.length}
+      />
 
       <Answer
         question={result.content}

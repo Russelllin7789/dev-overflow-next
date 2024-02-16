@@ -36,7 +36,7 @@ export async function createAnswer(params: CreateAnswerParams) {
 
     // add answer to the question's answers array
     await Question.findByIdAndUpdate(question, {
-      $push: { answer: newAnswer._id },
+      $push: { answers: newAnswer._id },
     });
 
     // TODO: add interaction...
