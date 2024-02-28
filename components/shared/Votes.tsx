@@ -1,6 +1,11 @@
 "use client";
+import {
+  downvoteQuestion,
+  upvoteQuestion,
+} from "@/lib/actions/question.action";
 import { formatAndDivideNumber } from "@/lib/utils";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 interface Props {
@@ -12,11 +17,6 @@ interface Props {
   downvotes: number;
   hasdownVoted: boolean;
   hasSaved?: boolean;
-  //   isUpvoted: boolean;
-  //   upvotedNum: number;
-  //   isDownvoted: boolean;
-  //   downvotedNum: number;
-  //   isFavorited: boolean;
 }
 
 const Votes = ({
@@ -29,6 +29,48 @@ const Votes = ({
   hasdownVoted,
   hasSaved,
 }: Props) => {
+  const pathname = usePathname();
+  //   const router = useRouter();
+
+  const handleSave = () => {};
+
+  const handleVote = async (action: string) => {
+    if (!userId) {
+      return;
+    }
+
+    if (action === "upvote") {
+      if (type === "question") {
+        await upvoteQuestion({
+          questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
+      }
+      //   else if (type === "answer") {
+      //   }
+      // todo: show a toast
+      return;
+    }
+
+    if (action === "downvote") {
+      if (type === "question") {
+        await downvoteQuestion({
+          questionId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
+      }
+      //   else if (type === "answer") {
+      //   }
+      // todo: show a toast
+    }
+  };
+
   return (
     <div className="flex gap-5">
       <div className="flex-center gap-2.5">
@@ -43,6 +85,7 @@ const Votes = ({
             height={18}
             alt="upvote"
             className="cursor-pointer"
+            onClick={() => handleVote("upvote")}
           />
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
             <p className="subtle-medium text-dark400_light900">
@@ -62,6 +105,7 @@ const Votes = ({
             height={18}
             alt="downvote"
             className="cursor-pointer"
+            onClick={() => handleVote("downvote")}
           />
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
             <p className="subtle-medium text-dark400_light900">
@@ -70,34 +114,6 @@ const Votes = ({
           </div>
         </div>
       </div>
-      {/* <div className="mr-2.5 flex items-center">
-        <Image
-          src={
-            isDownvoted
-              ? "../../public/assets/icons/downvoted.svg"
-              : "../../public/assets/icons/downvote.svg"
-          }
-          width={18}
-          height={18}
-          alt="downvote icon"
-          className="mr-1.5"
-        />
-        <p className="btn-secondary rounded-[2px] px-[3px] py-[3.2px]">
-          {downvotedNum}
-        </p>
-      </div>
-      <div>
-        <Image
-          src={
-            isFavorited
-              ? "../../public/assets/icons/star-filled.svg"
-              : "../../public/assets/icons/star.svg"
-          }
-          width={18}
-          height={18}
-          alt="favorite icon"
-        />
-      </div> */}
       <Image
         src={
           hasSaved
@@ -108,6 +124,7 @@ const Votes = ({
         height={18}
         alt="star"
         className="cursor-pointer"
+        onClick={() => handleSave()}
       />
     </div>
   );
