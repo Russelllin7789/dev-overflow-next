@@ -9,6 +9,7 @@ import {
   UpdateUserParams,
   GetAllUsersParams,
   ToggleSaveQuestionParams,
+  GetSavedQuestionsParams,
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import Question from "@/database/question.model";
@@ -128,6 +129,23 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
     }
 
     revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getSavedQuestion(params: GetSavedQuestionsParams) {
+  try {
+    connectToDatabase();
+
+    const { clerkId } = params;
+
+    const user = await User.findOne({ clerkId });
+
+    if (!user) {
+      throw new Error("User not found!");
+    }
   } catch (error) {
     console.log(error);
     throw error;
