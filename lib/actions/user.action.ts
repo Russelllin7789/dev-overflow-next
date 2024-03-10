@@ -1,5 +1,6 @@
 "use server";
 
+import { FilterQuery } from "mongoose";
 import User from "@/database/user.model";
 import { connectToDatabase } from "../mongoose";
 import {
@@ -13,6 +14,7 @@ import {
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import Question from "@/database/question.model";
+import Tag from "@/database/tag.model";
 
 export async function getAllUsers(params: GetAllUsersParams) {
   try {
@@ -135,17 +137,34 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
   }
 }
 
-export async function getSavedQuestion(params: GetSavedQuestionsParams) {
+export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   try {
     connectToDatabase();
 
-    const { clerkId } = params;
+    const { clerkId, searchQuery } = params;
 
-    const user = await User.findOne({ clerkId });
+    const query: FilterQuery<typeof Question> = searchQuery
+      ? { title: { $regex: new RegExp(searchQuery, "i") } }
+      : {};
+
+    const user = await User.findOne({ clerkId }).populate({
+      path: "saved",
+      match: query,
+      options: {
+        sort: { createdAt: -1 },
+      },
+      populate: [
+        { path: "tags", model: Tag, select: "_id name" },
+        { path: "author", model: User, select: "_id clerkId name picture" },
+      ],
+    });
 
     if (!user) {
       throw new Error("User not found!");
     }
+
+    const savedQuestions = user.saved;
+    return { questions: savedQuestions };
   } catch (error) {
     console.log(error);
     throw error;
